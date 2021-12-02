@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+  <head>
+     <style type = "text/css" >
+
+</style>
+<!--     <script>window.onerror = function(error, url, line) {parent.postMessage(["console", "❌ -- [ERROR] -- ❌ -- ⚠️ " + error], "*")};var cl = console.log;console.log = function () {var msg = [...arguments].join();parent.postMessage(["console", msg], "*");  }  </script><script crossorigin src="https://aframe.io/releases/1.2.0/aframe.min.js">
+</script> -->
+    <script crossorigin src="https://aframe.io/releases/1.0.4/aframe.min.js">
+</script>
+     <script src = "https://mimicproject.com/libs/maximilian.js">
+</script>
+    <script language="javascript" type="text/javascript">
+  let maxi = maximilian();
+  let audio = new maxi.maxiAudio();
+  let myOsc = new maxi.maxiOsc();
+  let mySample = new maxi.maxiSample();
+  let mybeat = new maxi.maxiSample();
+  let myClock = new maxi.maxiClock();
+  
+  audio.init();
+  
+ audio.loadSample('sound2.wav',mySample);
+ audio.loadSample('sound1.wav',mybeat);
+  
+ var tempo =120; //2 beats every second
+ var ticks = 3;
+ myClock.setTempo(tempo);
+ myClock.setTicksPerBeat(ticks);
+  
+
+ audio.play =function(){
+    myClock.ticker();
+    
+    if(myClock.tick && myClock.playHead%15==0){
+       mySample.trigger();
+    }
+   
+   if(myClock.tick && myClock.playHead%30==0){
+       mybeat.trigger();
+    }
+    var out = mySample.playOnce() +mybeat.playOnce();
+    return out
+  }
+
+</script>
+
+     <!--------------------------------------环境--------------------------------------------------->
+    <script crossorigin crossorigin src="https://unpkg.com/aframe-environment-component@1.2.0/dist/aframe-environment-component.min.js">
+</script>
+    <!--------------------------------------动效--------------------------------------------------->
+    <script crossorigin crossorigin src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v3.8.4/dist/aframe-extras.min.js">
+</script>
+    <!--------------------------------------犀牛--------------------------------------------------->
+     <script crossorigin crossorigin src="https://rawgit.com/protyze/aframe-curve-component/master/dist/aframe-curve-component.min.js">
+</script>
+     <script crossorigin crossorigin src="https://rawgit.com/protyze/aframe-alongpath-component/master/dist/aframe-alongpath-component.min.js">
+</script>
+
+  <!--------------------------------------下雪--------------------------------------------------->
+  <script crossorigin src="https://rawgit.com/takahirox/aframe-rain/master/build/aframe-rain.min.js">
+</script>
+    <script crossorigin src="https://unpkg.com/aframe-particle-system-component@1.0.x/dist/aframe-particle-system-component.min.js">
+</script>
+  
+  </head>
+   <body>
+     <a-scene
+                 background="color: #8098cf"
+                 fog="type: linear; color: #000000"
+                  rain="count:20000;
+                   dropHeight: .15;
+                   dropRadius: .15;
+                   height: 1000;
+                   color: white;
+                   splash: false"
+              >
+       <a-assets>
+         <a-asset-item id="pond" src="https://cdn.glitch.com/a33027c6-455e-4408-9565-fbf6fcae10c0%2Fout%20(7).glb?v=1585263357622" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="wall" src="https://cdn.glitch.com/a33027c6-455e-4408-9565-fbf6fcae10c0%2Ffence.glb?v=1585209639560" response-type="arraybuffer"></a-asset-item>
+          <a-asset-item  id="rhino" src="https://cdn.glitch.com/a33027c6-455e-4408-9565-fbf6fcae10c0%2Fout%20(5).glb?v=1584993963933" response-type="arraybuffer"></a-asset-item>
+      </a-assets>
+       
+      <!--------------------------------------环境--------------------------------------------------->
+       <a-entity environment="preset: dream" shadow="receive: true"></a-entity>
+       
+        <!--------------------------------------灯光--------------------------------------------------->
+       <a-entity light="type: directional;
+                        color:#FFFFFF;
+                        intensity:.3;
+                        castShadow:ture"
+                 position="-0.5 1 1"></a-entity>
+    
+     
+      <!--------------------------------------摄像机位置--------------------------------------------------->
+      <a-entity position = "-5 1 15">
+        <a-camera user-height ="10">
+        </a-camera></a-entity>
+      
+       <!--------------------------------------图像--------------------------------------------------->
+      <a-image src="https://cdn.glitch.me/08459aa8-cec5-4b08-9903-7c94523f8323%2Frhino.jpg?v=1638106704130"
+               position= "-5 5 5"
+               width="1"
+               height="0.75"
+               scale="6 6 2"></a-image>
+      
+       <!--------------------------------------旋转球【注释】-------------------------------------------------->
+       <a-sphere position="-5 2 8" 
+              animation="property:rotation;
+                               to:0 360 0;
+                               loop:true;
+                               dur:3000;
+                               easing:linear" 
+             
+              color="#AAAADD" radius="1" transparent="true" opacity="0.8" 
+               shadow>
+          
+         
+          <a-box position="0 0 1.5" rotation="45 0 0" color="#FAFAA2" 
+                 depth="0.25" height="0.25" width="0.25" shadow></a-box>
+          <a-box position="0 0 -1.5" rotation="45 0 0" color="#FAFAA2" 
+                 depth="0.25" height="0.25" width="0.25" shadow></a-box>
+         
+         </a-sphere>
+      
+      
+      <a-box class="homeworld" position= "-5 -1 10" color="black" rotation="0 360 0" width="4" height="2" depth=".5" ></a-box>
+      <a-plane class="homeworld" position="-5 1.5 12" rotation=" 0 360 0" height="0.8" width="auto" src="https://cdn.glitch.com/e2256d5e-1b58-4d46-b749-b56cc9ab19ee%2F1132051559.jpg?v=1625383152968" 
+          text="value: Rhino is a sacred animal : ) 
+                please take care of them, or you will be bitten; width: 3; wrapCount: 29; align: center; font:mozillavr; color:tomato"
+          ></a-plane>
+      
+      
+       <!-------------------------------------栅栏--------------------------------------------------->
+       <a-gltf-model class="homeworld" position="-30.165 0 -4.425" rotation="0 -90 0" scale="0.02 0.02 0.02" src="#wall" repeat="2 1" ></a-gltf-model>
+      <a-gltf-model class="homeworld" position="-30.165 0 -12.625" rotation="0 -90 0" scale="0.02 0.02 0.02" src="#wall" repeat="2 1" ></a-gltf-model>
+        <a-gltf-model class="homeworld" position="-30.165 0 -20.825" rotation="0 -90 0" scale="0.02 0.02 0.02" src="#wall" repeat="2 1"></a-gltf-model>
+        <a-gltf-model class="homeworld" position="-30.165 0 -29.025" rotation="0 -90 0" scale="0.02 0.02 0.02" src="#wall" repeat="2 1"></a-gltf-model>
+        <a-gltf-model class="homeworld" position="-30.165 0 -37.225" rotation="0 -90 0" scale="0.02 0.02 0.02" src="#wall" repeat="2 1"></a-gltf-model>
+       
+       
+        <a-gltf-model class="homeworld" position="-21.8 0 4" rotation="0 0 0" scale="0.02 0.02 0.02" src="#wall" repeat="2 1"></a-gltf-model>
+       <a-gltf-model class="homeworld" position="-30 0 4" rotation="0 0 0" scale="0.02 0.02 0.02" src="#wall" repeat="2 1"></a-gltf-model>
+        <a-gltf-model class="homeworld" position="-13.6 0 4" rotation="0 0 0" scale="0.02 0.02 0.02" src="#wall" repeat="2 1"></a-gltf-model>
+        <a-gltf-model class="homeworld" position="-5.4 0 4" rotation="0 0 0" scale="0.02 0.02 0.02" src="#wall" repeat="2 1"></a-gltf-model>
+       <a-gltf-model class="homeworld" position="2.8 0 4" rotation="0 0 0" scale="0.02 0.02 0.02" src="#wall" repeat="2 1"></a-gltf-model>
+
+       
+       <a-gltf-model class="homeworld" position="-21.7 0 -37.39" rotation="0 -180 0" scale="0.02 0.02 0.02" src="#wall" repeat="2 1"></a-gltf-model> 
+       <a-gltf-model class="homeworld" position="-13.5 0 -37.39" rotation="0 -180 0" scale="0.02 0.02 0.02" src="#wall" repeat="2 1"></a-gltf-model> 
+       <a-gltf-model class="homeworld" position="-5.3 0 -37.39" rotation="0 -180 0" scale="0.02 0.02 0.02" src="#wall" repeat="2 1"></a-gltf-model> 
+       <a-gltf-model class="homeworld" position="2.9 0 -37.39" rotation="0 -180 0" scale="0.02 0.02 0.02" src="#wall" repeat="2 1"></a-gltf-model> 
+       <a-gltf-model class="homeworld" position="11.1 0 -37.39" rotation="0 -180 0" scale="0.02 0.02 0.02" src="#wall" repeat="2 1"></a-gltf-model> 
+       
+       
+         <a-gltf-model class="homeworld"  position="11.215 0 3.825" rotation="0 90 0" scale="0.02 0.02 0.02" src="#wall" repeat="2 1"></a-gltf-model>
+        <a-gltf-model class="homeworld" position="11.215 0 -4.375" rotation="0 90 0" scale="0.02 0.02 0.02" src="#wall" repeat="2 1"></a-gltf-model>
+        <a-gltf-model class="homeworld" position="11.215 0 -12.575" rotation="0 90 0" scale="0.02 0.02 0.02" src="#wall" repeat="2 1"></a-gltf-model>
+        <a-gltf-model class="homeworld" position="11.215 0 -20.775" rotation="0 90 0" scale="0.02 0.02 0.02" src="#wall" repeat="2 1"></a-gltf-model>
+        <a-gltf-model class="homeworld" position="11.215 0 -28.975" rotation="0 90 0" scale="0.02 0.02 0.02" src="#wall" repeat="2 1"></a-gltf-model>
+       <!--------------------------------------栅栏--------------------------------------------------->
+      <!-- -------------------------右树------------------------------------------------>
+      <a-box position="5 1 2" scale="0.5 2 0.5" color="#552b00"></a-box>
+      <a-cone position="5 3.2 2" color="green" scale="1 3 1"></a-cone>
+      
+      <!-- -------------------------左树------------------------------------------------>
+      <a-box position="-15 1 2" scale="0.5 2 0.5" color="#552b00"></a-box>
+      <a-cone position="-15 3.2 2" color="green" scale="1 3 1"></a-cone>
+      
+        <!-- -------------------------后右树------------------------------------------------>
+      <a-box position="-5 2 -10" scale="2.5 4 2.5" color="#552b00"></a-box>
+      <a-cone position="-5 10 -10" color="green" scale="5 15 5"></a-cone>
+      
+      <!-- -------------------------后左树------------------------------------------------>
+      <a-box position="-25 2 -10" scale="2.5 4 2.5" color="#552b00"></a-box>
+      <a-sphere position="-25 9 -10" color="green" scale="5 6 5"></a-sphere>
+      
+       <!-- -------------------------中树------------------------------------------------>
+      <a-box position="5 2 -25" scale="2.5 4 2.5" color="#552b00"></a-box>
+      <a-cone position="5 10 -25" color="green" scale="5 15 5"></a-cone>
+      
+          
+       <!--------------------------------------旋转的球--------------------------------------------------->
+      
+        <a-sphere animation="property: rotation; to: 0 360 0; loop: true; dur: 1000" src="https://cdn.glitch.me/b870d9ec-1139-44f9-b462-223e4a2c74e7%2Fcubes.jpg" position="5 -0.5 -3" radius="4" color="#C41D53">
+          <a-sphere position="0 5 0" radius="0.7" height="1.5" color="#FFC65D"></a-sphere>
+       </a-sphere>
+     
+        <!--------------------------------------圆柱【测试】--------------------------------------------------->
+
+      
+       
+       <!--------------------------------------地板---------------------------------------------------> 
+     <a-plane src="https://cdn.glitch.me/4ff3a15b-8f4c-440c-a871-53949339ff94%2Fsnow.jpg?v=1638361915950https://cdn.glitch.me/4ff3a15b-8f4c-440c-a871-53949339ff94%2Fsnowfloor.jpg?v=1638361280147" position="0 0 -4" rotation="-90 0 0" width="100" height="50"  color="#FFFFFF"></a-plane>
+      <!--------------------------------------犀牛--------------------------------------------------->
+      <a-curve id="track1">
+       <a-curve-point position="-18 1 -5"></a-curve-point>
+        <a-curve-point position="-25 1 -15"></a-curve-point>
+      <a-curve-point position="-24 1 -24"></a-curve-point>
+         <a-curve-point position="-16 0 -26"></a-curve-point>
+      <a-curve-point position="-5 1 -28"></a-curve-point>
+         <a-curve-point position="-2 1 -18"></a-curve-point>
+      <a-curve-point position="-1 1 -4"></a-curve-point>
+      <a-curve-point position="-18 1 -5"></a-curve-point>
+    </a-curve>
+      
+        <a-gltf-model class="homeworld" position="-18 1 -9" rotation="0 180 0" scale="2 2 2" src="#rhino"  alongpath="curve: #track1; loop:true; dur:25000; triggers: #point1; rotate: true;" animation-mixer="clip: Armature|walk; duration: 4"></a-gltf-model>
+      <!--------------------------------------水池-------------------------------------------------->
+        <a-gltf-model class="homeworld" position="-10 -5.9 -20" rotation="0  2 0" scale=".1 .05 .06" color="#E6E6FA" src="#pond"></a-gltf-model>
+       
+       
+        <!--------------------------------------雪人-------------------------------------------------->
+       <!--   ---------------------------- 身体&头 ------------------------------------->
+      <a-sphere
+        position="0 1.3 8"
+        radius="1.8"
+        color="#EFD5E"
+        shadow    
+      ></a-sphere>
+      
+      <a-sphere
+        position="0 3.5 8"
+        radius="0.9"
+        color="#EFD5E"
+        shadow
+      ></a-sphere>
+      
+<!--   ---------------------------- 手臂  ------------------------------------->      
+      <a-cylinder
+        position="1.7 2.0 8"
+        rotation="0 0 45"
+        radius="0.1"
+        height="2"
+        color="#FFC65D"
+        shadow
+      ></a-cylinder>
+      <a-cylinder
+        position="-1.7 2.0 8"
+        rotation="0 0 -45"
+        radius="0.1"
+        height="2"
+        color="#FFC65D"
+        shadow
+      ></a-cylinder>
+ <!--   ---------------------------- 眼睛------------------------------------->     
+        <a-cylinder
+        position="0.2 3.9 8.8"
+        rotation="0 90 90"
+        radius="0.05"
+        height="0.1"
+        color="#900C3F"
+        shadow
+      ></a-cylinder>
+      <a-cylinder
+        position="-0.2 3.9 8.8"
+        rotation="0 90 90"
+        radius="0.05"
+        height="0.1"
+        color="#900C3F"
+        shadow
+      ></a-cylinder>
+      
+ <!--   ---------------------------- 鼻子------------------------------------->         
+      <a-cone
+        position="0 3.5 9"
+        radius-bottom="0.1"
+        rotation="90 10 0"
+        height="0.2"
+        color="#FFC65D"
+        shadow
+      ></a-cone>
+       
+       <!--   ---------------------------- 大眼仔------------------------------------->   
+       <a-gltf-model
+        position="-10 4 8" 
+        rotation="0 200 0"
+                    scale=" 0.5 0.5"
+        src="https://cdn.glitch.me/41f80828-2b8e-4843-9ec0-a381df334026%2Fout.glb?v=1635521638264"
+      ></a-gltf-model>
+       <a-box position="-10 -0.5 8" scale="2.5 4 2.5" color="#552b00"></a-box>
+       
+       
+       <!--------------------------------------天空--------------------------------------------------->
+      <a-sky color="#E6E6FA"></a-sky>
+      
+      
+      
+      
+    </a-scene>
+    <script language="javascript" type="text/javascript">
+
+</script>
+ 
+    
+  </body>
+</html>
