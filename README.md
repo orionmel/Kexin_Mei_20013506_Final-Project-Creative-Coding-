@@ -48,6 +48,7 @@ I used a snow plug-in, which is more convenient to use, but after my experiment,
 ```javascript
 <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
 ```
+
 Using this plug-in also requires the import of two elements first  
 
 ```javascript
@@ -70,3 +71,83 @@ Then insert the rain object extracted by the plug-in in the middle of the < a-sc
               >
 ```  
 
+***3. About walking rhinos***    
+For walking rhinos, I mainly use curve components, which are characterized by the different curves drawn and the location of the curves, and then make the object move along the curve, thus achieving a good effect of the rhino's movement.  
+https://github.com/protyze/aframe-curve-component
+
+The first is the need to import curve component elements  
+
+```javascript
+  <script src="https://rawgit.com/aframevr/aframe/master/dist/aframe-master.min.js"></script>
+  <script src="https://unpkg.com/aframe-curve-component/dist/aframe-curve-component.min.js"></script>
+```
+
+Then draw the curve and the curve point, and then give the drawn curve to the object  
+
+```javascript
+ <a-curve id="track1">
+       <a-curve-point position="-18 1 -5"></a-curve-point>
+       <a-curve-point position="-25 1 -15"></a-curve-point>
+       <a-curve-point position="-24 1 -24"></a-curve-point>
+       <a-curve-point position="-16 0 -26"></a-curve-point>
+       <a-curve-point position="-5 1 -28"></a-curve-point>
+       <a-curve-point position="-2 1 -18"></a-curve-point>
+       <a-curve-point position="-1 1 -4"></a-curve-point>
+       <a-curve-point position="-18 1 -5"></a-curve-point>
+</a-curve>
+      
+       <a-gltf-model class="homeworld" position="-18 1 -9" rotation="0 180 0" scale="2 2 2" src="#rhino"  alongpath="curve: #track1; loop:true; dur:25000; triggers: #point1; rotate: true;" animation-mixer="clip: Armature|walk; duration: 4"></a-gltf-model>
+    
+```
+
+***4. Other objects imported***   
+In order to enrich my environment, I also imported different models, which I think is a good choice  
+[1] A pool in a zoo   
+```javascript
+  <a-asset-item id="pond" src="https://cdn.glitch.com/a33027c6-455e-4408-9565-fbf6fcae10c0%2Fout (7).glb?v=1585263357622" response-type="arraybuffer"></a-asset-item>
+```
+[2] The fence  
+```javascript
+  <a-asset-item id="wall" src="https://cdn.glitch.com/a33027c6-455e-4408-9565-fbf6fcae10c0%2Ffence.glb?v=1585209639560" response-type="arraybuffer"></a-asset-item>
+```
+[3] The rhinos  
+```javascript
+  <a-asset-item id="rhino" src="https://cdn.glitch.com/a33027c6-455e-4408-9565-fbf6fcae10c0%2Fout (5).glb?v=1584993963933" response-type="arraybuffer"></a-asset-item>
+```
+[4] The big eyes sculpture
+```javascript
+  <a-gltf-model
+  position="-10 4 8"
+  rotation="0 200 0"
+  scale=" 0.5 0.5"
+  src="https://cdn.glitch.me/41f80828-2b8e-4843-9ec0-a381df334026%2Fout.glb?v=1635521638264"
+  ></a-gltf-model>
+  <a-box position="-10 -0.5 8" scale="2.5 4 2.5" color="#552b00"></a-box>
+```
+Difficulties and improvement
+-----------------------------
+1. The hardest part of the whole project design process was the position of the object and the camera's perspective, because my design angle was to tell the user the information in the fence from a sign outside the fence, so it all took me a lot of time to set a camera angle and then different objects needed to adjust the position and direction according to that angle.  
+ 
+2. About the snow day plug-in, I can not find a very suitable particle dynamics at first, tried many times also did not succeed in the snow day plug-in configuration, and then looked at some information to know is my a-frame version of the reason.    
+
+3. For the special effects of lighting, I do not feel that the picture is enough, I think later try to be able to light track the motion of objects to achieve more interesting effects.
+    
+4. In my later study of a-frame, I found that a-frame can also implement a lot of ui interface and mouse click to switch different html screen, I think this is another aspect that I can further develop my project, I think in the future I can add some gesture switching interaction, or can use vr glasses to complete a more interesting scene switch.
+
+Reference
+===========
+[1] [https://aframe.io/docs/1.2.0/primitives/a-sound.html](https://aframe.io/docs/1.2.0/primitives/a-sound.html)
+
+[2] [https://github.com/ual-cci/accellerate-immersive-framework/wiki](https://github.com/ual-cci/accellerate-immersive-framework/wiki)
+
+[3] [https://github.com/supermedium/aframe-environment-component](https://github.com/supermedium/aframe-environment-component)
+
+[4] [https://github.com/IdeaSpaceVR/aframe-particle-system-component](https://github.com/IdeaSpaceVR/aframe-particle-system-component)
+
+[5] [https://github.com/protyze/aframe-curve-component](https://github.com/protyze/aframe-curve-component)
+
+[6] [https://www.youtube.com/watch?v=liOLtcPmMa0&list=PL8MkBHej75fJD-HveDzm4xKrciC5VfYuV&index=4](https://www.youtube.com/watch?v=liOLtcPmMa0&list=PL8MkBHej75fJD-HveDzm4xKrciC5VfYuV&index=4)
+
+[7] [https://aframe.io/aframe-school/#/8](https://aframe.io/aframe-school/#/8)
+
+[8] [https://maxilib-reference.github.io/MaxiLib-Reference/#maxiosc](https://maxilib-reference.github.io/MaxiLib-Reference/#maxiosc)
