@@ -24,6 +24,13 @@ The description of my code :
 -------------------------------
 ### 一、About my 'background sound' ：
 1. In the background music, i use the maxiSample from object the Maximilian library ,and mixes two 'sound1.wav' and 'sound2.wav' sound files to play.
+
+```javascript
+ audio.init(); 
+ audio.loadSample('sound2.wav',mySample);
+ audio.loadSample('sound1.wav',mybeat);
+```
+
 2. I also used the maxiClock system, in order to create a bit of rhythm, I used two audio files playHead at a specific point in time, and then let the audio play more interesting, and each sample only play once.
 
 ### 二、About a-frame visualization scenes ：
